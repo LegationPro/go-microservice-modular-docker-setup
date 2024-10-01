@@ -1,0 +1,20 @@
+# Pull golang image
+FROM golang:1.23-alpine
+
+# Switch to /app as the working directory
+WORKDIR /app
+
+# Copy the authentication codebase over to our container
+COPY ./services/users /app/users/
+
+# Copy the shared codebase and libraries that are shared across our apps inside the container
+COPY ./shared /app/shared
+
+# Initialize go workspace inside of our container
+RUN go work init
+
+# Assign different codebases to go workspaces
+RUN go work use ./users ./shared
+
+# Simply run our service with this simple command
+CMD ["go", "run", "./users"]

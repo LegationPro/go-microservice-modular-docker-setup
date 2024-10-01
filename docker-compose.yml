@@ -1,0 +1,20 @@
+services:
+  authentication:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.authentication
+    volumes:
+      - ./services/authentication:/app/authentication
+      - ./shared:/app/shared
+    ports:
+      - "8081:8081"
+
+  users:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.users
+    volumes:
+      - ./services/users:/app/users
+      - ./shared:/app/shared
+    ports:
+      - "8082:8082"
